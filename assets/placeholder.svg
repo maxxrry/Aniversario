@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#1a1525"/>
+  <text x="200" y="210" text-anchor="middle" font-size="80" font-family="serif" fill="rgba(232,160,168,0.25)">✦</text>
+  <text x="200" y="250" text-anchor="middle" font-size="14" font-family="sans-serif" fill="rgba(255,255,255,0.15)" letter-spacing="3">tu foto aquí</text>
+</svg>

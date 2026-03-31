@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nuestro Aniversario ✦</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="ldr-ring">
+    <svg width="90" height="90" viewBox="0 0 90 90">
+      <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(232,160,168,0.15)" stroke-width="1.5"/>
+      <circle cx="45" cy="45" r="36" fill="none" stroke="url(#lg)" stroke-width="1.5"
+        stroke-dasharray="60 166" stroke-linecap="round"/>
+      <defs>
+        <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#e8a0a8"/>
+          <stop offset="100%" stop-color="#c9a96e"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="dot">✦</div>
+  </div>
+  <div class="ldr-msg" id="ldr-msg"></div>
+  <div class="ldr-hint" id="ldr-hint"></div>
+  <button class="ldr-btn" id="ldr-btn"></button>
+</div>
+
+<!-- MUSIC -->
+<button id="music-btn" title="Música">♫</button>
+<audio id="bgm" loop></audio>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow" id="hero-eyebrow"></div>
+  <h1 class="hero-title" id="hero-title"></h1>
+  <div class="hero-counter" id="counter">calculando...</div>
+  <div class="hero-sub" id="hero-sub"></div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span id="scroll-text"></span>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <h2 id="tl-heading"></h2>
+  <div class="timeline-wrap" id="tl-wrap"></div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <h2 id="gallery-heading"></h2>
+  <div class="gallery-grid" id="gallery-grid"></div>
+</section>
+
+<!-- TRIVIA -->
+<section id="trivia">
+  <h2>Trivia de Nosotros</h2>
+  <div id="trivia-box"></div>
+  <div class="trivia-actions">
+    <button id="trivia-next">Siguiente</button>
+  </div>
+  <div id="trivia-score"></div>
+</section>
+
+
+<!-- PLAYLIST CAROUSEL -->
+<section id="playlist">
+  <h2>Canciones que me recuerdan a ti</h2>
+  <div class="pl-carousel" id="pl-carousel"></div>
+</section>
+
+<!-- FINAL -->
+<section id="final">
+  <div class="final-heart" id="final-heart"></div>
+  <h2 id="final-msg"></h2>
+  <div class="final-sign" id="final-sign"></div>
+</section>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
