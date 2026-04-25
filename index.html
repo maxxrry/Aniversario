@@ -33,6 +33,13 @@
 
 <!-- MUSIC -->
 <button id="music-btn" title="Música">♫</button>
+<div id="now-playing">
+  <div id="np-bars"><span></span><span></span><span></span></div>
+  <div id="np-info">
+    <div id="np-title"></div>
+    <div id="np-artist"></div>
+  </div>
+</div>
 <audio id="bgm" loop></audio>
 
 <!-- HERO -->
@@ -41,6 +48,7 @@
   <h1 class="hero-title" id="hero-title"></h1>
   <div class="hero-counter" id="counter">calculando...</div>
   <div class="hero-sub" id="hero-sub"></div>
+  <div class="hero-divider"></div>
   <div class="hero-scroll">
     <div class="scroll-line"></div>
     <span id="scroll-text"></span>
@@ -73,7 +81,11 @@
 <!-- PLAYLIST CAROUSEL -->
 <section id="playlist">
   <h2>Canciones que me recuerdan a ti</h2>
-  <div class="pl-carousel" id="pl-carousel"></div>
+  <div class="pl-wrapper">
+    <button class="pl-nav pl-nav-prev" aria-label="Anterior">&#8249;</button>
+    <div class="pl-carousel" id="pl-carousel"></div>
+    <button class="pl-nav pl-nav-next" aria-label="Siguiente">&#8250;</button>
+  </div>
 </section>
 
 <!-- FINAL -->

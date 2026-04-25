@@ -82,7 +82,7 @@ function initContent() {
     let imgsHtml = '';
     if (ev.images && ev.images.length) {
       imgsHtml = `<div class="tl-images">
-        ${ev.images.map(src => `<img src="${src}" alt="">`).join('')}
+        ${ev.images.map(src => `<img src="${src}" alt="" loading="lazy">`).join('')}
       </div>`;
     }
 
@@ -121,7 +121,7 @@ function initContent() {
     // Try image; fallback to emoji placeholder
     ph.innerHTML = `
       <div class="g-tape"></div>
-      <img src="${src}" alt="Recuerdo ${i+1}"
+      <img src="${src}" alt="Recuerdo ${i+1}" loading="lazy"
            onerror="this.style.display='none';this.nextSibling.style.display='flex'">
       <div class="ph" style="display:none">${emojis[i % emojis.length]}</div>
       <div class="g-photo-num">${String(i + 1).padStart(2, '0')}</div>`;
@@ -140,7 +140,18 @@ const trivia = [
   { q: "Nuestra cancion especial es?", type: "mc", options: ["(cancion 1)", "(cancion 2)", "(cancion 3)"], a: 0 },
   { q: "Aun me haces mariposas?", type: "tf", options: ["Verdadero", "Falso"], a: 0 }
 ];
-  
+
+const triviaFeedbackMsgs = {
+  correct: ["¡Exacto! 💕", "¡Lo sabías! 🌙", "¡Perfecto! ✨", "¡Así es! 💫"],
+  wrong:   ["Era la otra... 😅", "¡Casi! 🌸", "Jajaja, tenemos que repasar 💕", "Mmm, no exactamente 😄"]
+};
+
+const triviaFinalMsgs = [
+  { min: 7, msg: "¡Lo sabías todo! Sos lo mejor de mi vida 💕" },
+  { min: 4, msg: "Casi perfecto, igual te amo muchísimo 🌙" },
+  { min: 0, msg: "Jajaja, tenemos que repasar juntos... 💫" }
+];
+
 let triviaIndex = 0;
 let triviaScore = 0;
 let locked = false;
@@ -152,11 +163,22 @@ const triviaScoreEl = document.getElementById("trivia-score");
 function renderTrivia() {
   const item = trivia[triviaIndex];
   locked = false;
+  triviaNext.style.display = "none";
+
+  const dots = trivia.map((_, i) =>
+    `<span class="trivia-dot ${i < triviaIndex ? 'done' : i === triviaIndex ? 'active' : ''}"></span>`
+  ).join("");
+
   triviaBox.innerHTML = `
-    <div class="trivia-q">${item.q}</div>
+    <div class="trivia-progress">
+      <div class="trivia-dots">${dots}</div>
+      <div class="trivia-counter">Pregunta ${triviaIndex + 1} de ${trivia.length}</div>
+    </div>
+    <div class="trivia-q trivia-slide-in">${item.q}</div>
     <div class="trivia-opts">
       ${item.options.map((opt, i) => `<button class="trivia-opt" data-i="${i}">${opt}</button>`).join("")}
     </div>
+    <div class="trivia-feedback"></div>
   `;
   triviaScoreEl.textContent = `Puntaje: ${triviaScore}/${trivia.length}`;
 }
@@ -169,20 +191,44 @@ triviaBox.addEventListener("click", (e) => {
   const item = trivia[triviaIndex];
   const choice = Number(btn.dataset.i);
   const buttons = [...triviaBox.querySelectorAll(".trivia-opt")];
+  const feedbackEl = triviaBox.querySelector(".trivia-feedback");
 
   buttons[item.a].classList.add("correct");
   if (choice !== item.a) btn.classList.add("wrong");
-  if (choice === item.a) triviaScore++;
+
+  if (choice === item.a) {
+    triviaScore++;
+    const msgs = triviaFeedbackMsgs.correct;
+    feedbackEl.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+    feedbackEl.className = "trivia-feedback correct";
+  } else {
+    const msgs = triviaFeedbackMsgs.wrong;
+    feedbackEl.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+    feedbackEl.className = "trivia-feedback wrong";
+  }
+
   triviaScoreEl.textContent = `Puntaje: ${triviaScore}/${trivia.length}`;
+  triviaNext.style.display = "";
 });
 
 triviaNext.addEventListener("click", () => {
   if (triviaIndex < trivia.length - 1) {
     triviaIndex++;
-    renderTrivia();
+    triviaBox.classList.add("trivia-exit");
+    setTimeout(() => {
+      triviaBox.classList.remove("trivia-exit");
+      renderTrivia();
+    }, 250);
   } else {
-    triviaBox.innerHTML = `<div class="trivia-q">Final! Tu puntaje fue ${triviaScore}/${trivia.length}.</div>`;
+    const finalMsg = triviaFinalMsgs.find(f => triviaScore >= f.min);
+    triviaBox.innerHTML = `
+      <div class="trivia-final">
+        <div class="trivia-final-score">${triviaScore}/${trivia.length}</div>
+        <div class="trivia-final-msg">${finalMsg.msg}</div>
+      </div>
+    `;
     triviaNext.style.display = "none";
+    triviaScoreEl.textContent = "";
   }
 });
 
@@ -217,6 +263,23 @@ document.getElementById('ldr-btn').addEventListener('click', () => {
 });
 
 // ── MÚSICA ───────────────────────────────────────────────────
+// ── NOW PLAYING ──────────────────────────────────────────────
+const npChip   = document.getElementById('now-playing');
+const npTitle  = document.getElementById('np-title');
+const npArtist = document.getElementById('np-artist');
+
+function setNowPlaying(title, artist) {
+  npTitle.textContent  = title;
+  npArtist.textContent = artist;
+  npChip.classList.add('visible');
+  npChip.classList.remove('paused');
+}
+
+function pauseNowPlaying() { npChip.classList.add('paused'); }
+function resumeNowPlaying() { npChip.classList.remove('paused'); }
+function hideNowPlaying() { npChip.classList.remove('visible'); }
+
+// ── MÚSICA ───────────────────────────────────────────────────
 (function initMusic() {
   const btn = document.getElementById('music-btn');
   const bgm = document.getElementById('bgm');
@@ -227,10 +290,18 @@ document.getElementById('ldr-btn').addEventListener('click', () => {
       bgm.play().catch(() => {});
       btn.textContent = '♬';
       btn.classList.add('playing');
+      // si hay src de config (música de fondo), mostrar nombre del archivo
+      if (bgm.src && !npChip.classList.contains('visible')) {
+        const name = bgm.src.split('/').pop().replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+        setNowPlaying(name, 'música de fondo');
+      } else {
+        resumeNowPlaying();
+      }
     } else {
       bgm.pause();
       btn.textContent = '♫';
       btn.classList.remove('playing');
+      pauseNowPlaying();
     }
     playing = !playing;
   });
@@ -294,28 +365,105 @@ function initLightbox() {
 
 // ── PLAYLIST CAROUSEL ───────────────────────────────────────
 const fakePlaylist = [
-  { title: "Tu cancion especial", artist: "Nosotros", time: "3:21" },
-  { title: "Recuerdo del primer dia", artist: "Tu y Yo", time: "2:58" },
-  { title: "Solo contigo", artist: "Siempre", time: "3:44" },
-  { title: "Mirada bonita", artist: "Amor", time: "4:02" },
-
+  { title: "Tus ojos",         artist: "Los Cafres",              time: "4:15", cover: "assets/fotoCanciones/tusojos.webp",        src: "" },
+  { title: "Signos",           artist: "Soda Stereo",             time: "5:17", cover: "assets/fotoCanciones/signos.webp",         src: "" },
+  { title: "Beautiful",        artist: "Gustavo Cerati",          time: "6:14", cover: "assets/fotoCanciones/Beautiful.jpg",       src: "assets/GustavoCerati-Song1.mp3" },
+  { title: "Fashion Killa",    artist: "A$AP Rocky",              time: "4:46", cover: "assets/fotoCanciones/fashionkilla.jfif",   src: "" },
+  { title: "Thinkin Bout You", artist: "Frank Ocean",             time: "3:21", cover: "assets/fotoCanciones/thinkinboutyou.png", src: "" },
+  { title: "prove it",         artist: "21 Savage & Summer Walker", time: "3:28", cover: "assets/fotoCanciones/proveit.jpg",      src: "" },
+  { title: "Fui a Jamaica",    artist: "Romeo Santos",            time: "3:56", cover: "assets/fotoCanciones/fuiajamaica.webp",   src: "" },
+  { title: "Fashion Killa",    artist: "A$AP Rocky",              time: "4:46", cover: "assets/fotoCanciones/fashionkilla.jfif",  src: "" }
 ];
 
 const plCarousel = document.getElementById("pl-carousel");
 if (plCarousel) {
-  plCarousel.innerHTML = fakePlaylist.map(item => `
-    <div class="pl-card">
-      <div class="pl-cover">✦</div>
+  plCarousel.innerHTML = fakePlaylist.map((item, i) => `
+    <div class="pl-card ${item.src ? '' : 'pl-no-src'}" data-index="${i}">
+      <div class="pl-cover">
+        <img src="${item.cover}" alt="${item.title}" loading="lazy" onerror="this.style.opacity='0'">
+        <div class="pl-play-overlay">
+          <span class="pl-play-icon">${item.src ? '▶' : '✕'}</span>
+        </div>
+      </div>
       <div class="pl-title">${item.title}</div>
       <div class="pl-artist">${item.artist}</div>
-      <div class="pl-row">
-        <button class="pl-play">Play</button>
-        <div class="pl-time">${item.time}</div>
-      </div>
     </div>
   `).join("");
+
+  // ── Reproducción al click ────────────────────────────────
+  const bgm = document.getElementById('bgm');
+  const musicBtn = document.getElementById('music-btn');
+  let currentPlIndex = null;
+
+  plCarousel.addEventListener('click', e => {
+    const card = e.target.closest('.pl-card');
+    if (!card || card.classList.contains('pl-no-src')) return;
+
+    const idx = Number(card.dataset.index);
+    const item = fakePlaylist[idx];
+
+    // Si se clickea la que ya suena, pausar/reanudar
+    if (idx === currentPlIndex) {
+      if (bgm.paused) {
+        bgm.play().catch(() => {});
+        card.classList.add('pl-playing');
+        card.querySelector('.pl-play-icon').textContent = '❚❚';
+        resumeNowPlaying();
+      } else {
+        bgm.pause();
+        card.classList.remove('pl-playing');
+        card.querySelector('.pl-play-icon').textContent = '▶';
+        pauseNowPlaying();
+      }
+      return;
+    }
+
+    // Quitar estado anterior
+    if (currentPlIndex !== null) {
+      const prev = plCarousel.querySelector(`[data-index="${currentPlIndex}"]`);
+      if (prev) {
+        prev.classList.remove('pl-playing');
+        prev.querySelector('.pl-play-icon').textContent = '▶';
+      }
+    }
+
+    // Cargar y reproducir nueva canción
+    bgm.src = item.src;
+    bgm.volume = 0.5;
+    bgm.play().catch(() => {});
+    currentPlIndex = idx;
+    card.classList.add('pl-playing');
+    card.querySelector('.pl-play-icon').textContent = '❚❚';
+    setNowPlaying(item.title, item.artist);
+
+    // Sincronizar botón de música global
+    musicBtn.textContent = '♬';
+    musicBtn.classList.add('playing');
+  });
+
+  // Cuando el audio termina, resetear el estado visual
+  bgm.addEventListener('ended', () => {
+    if (currentPlIndex !== null) {
+      const card = plCarousel.querySelector(`[data-index="${currentPlIndex}"]`);
+      if (card) {
+        card.classList.remove('pl-playing');
+        card.querySelector('.pl-play-icon').textContent = '▶';
+      }
+      currentPlIndex = null;
+      hideNowPlaying();
+    }
+  });
 }
 
+
+// ── PLAYLIST NAV ────────────────────────────────────────────
+const plPrev = document.querySelector('.pl-nav-prev');
+const plNext = document.querySelector('.pl-nav-next');
+if (plPrev && plNext && plCarousel) {
+  const step = 200;
+  plPrev.addEventListener('click', () => plCarousel.scrollBy({ left: -step, behavior: 'smooth' }));
+  plNext.addEventListener('click', () => plCarousel.scrollBy({ left:  step, behavior: 'smooth' }));
+}
 
 // ── ARRANQUE ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
