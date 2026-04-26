@@ -213,6 +213,8 @@ section{position:relative;z-index:1;width:100%;min-height:100vh;display:flex;fle
 .tl-images img{width:calc(50% - .375rem);border-radius:10px;object-fit:cover;aspect-ratio:4/3;box-shadow:0 4px 12px rgba(0,0,0,0.4)}
 .tl-images img:only-child{width:100%}
 .tl-footer{font-family:var(--hand);font-size:1.05rem;color:var(--gold);margin-top:.8rem;opacity:.85}
+.tl-videos{display:flex;flex-direction:column;gap:.75rem;margin-top:1rem}
+.tl-video{width:100%;border-radius:10px;object-fit:cover;box-shadow:0 4px 16px rgba(0,0,0,0.5);max-height:360px;background:#000}
 
 /* ── GALLERY ── */
 #gallery{padding:6rem 2rem}
@@ -354,6 +356,78 @@ section{position:relative;z-index:1;width:100%;min-height:100vh;display:flex;fle
 .pl-playing .pl-artist{color:rgba(232,160,168,.65)}
 .pl-title{font-family:var(--sans);font-size:.9rem;font-weight:400;color:#e8e0d5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
 .pl-artist{font-size:.78rem;color:rgba(255,255,255,.4);text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ── INSTAGRAM CHAT MOCKUP ── */
+.ig-chat{
+  background:#000;
+  border-radius:14px;
+  overflow:hidden;
+  max-width:340px;
+  margin:.5rem auto 0;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  box-shadow:0 8px 32px rgba(0,0,0,0.6);
+  border:1px solid rgba(255,255,255,0.08);
+}
+.ig-chat-header{
+  display:flex;align-items:center;gap:.65rem;
+  padding:.75rem 1rem;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  background:#121212;
+}
+.ig-avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;font-weight:600;color:#fff;flex-shrink:0;
+}
+.ig-username{
+  font-size:.85rem;font-weight:600;color:#f0f0f0;
+  font-style:normal;
+}
+.ig-chat-body{
+  padding:.9rem .8rem 1rem;
+  display:flex;flex-direction:column;gap:.4rem;
+  background:#000;
+  max-height:420px;overflow-y:auto;
+}
+.ig-chat-body::-webkit-scrollbar{width:3px}
+.ig-chat-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:999px}
+.ig-date{
+  text-align:center;font-size:.68rem;
+  color:rgba(255,255,255,0.4);letter-spacing:.04em;
+  margin:.3rem 0 .5rem;
+}
+.ig-msg{
+  max-width:72%;padding:.55rem .85rem;
+  border-radius:22px;font-size:.82rem;
+  line-height:1.4;word-break:break-word;
+}
+.ig-sent{
+  align-self:flex-end;
+  background:#3797f0;
+  color:#fff;
+  border-bottom-right-radius:6px;
+}
+.ig-recv{
+  align-self:flex-start;
+  background:#262626;
+  color:#f0f0f0;
+  border-bottom-left-radius:6px;
+}
+.ig-reply-wrap{
+  align-self:flex-start;
+  display:flex;flex-direction:column;gap:.3rem;
+  max-width:78%;
+}
+.ig-reply-ref{
+  font-size:.72rem;color:rgba(255,255,255,0.38);
+  padding:.3rem .75rem;
+  border-left:2px solid rgba(255,255,255,0.25);
+  border-radius:4px;
+  margin-left:.85rem;
+  font-style:italic;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
 
 /* ── LIGHTBOX ── */
 #lightbox{position:fixed;inset:0;z-index:10000;background:rgba(8,6,12,.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .28s ease}

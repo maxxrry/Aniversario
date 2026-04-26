@@ -41,12 +41,33 @@ const config = {
     },
     {
       title:   "✦ La primera conversación",
-      content: "Describe ese primer mensaje o llamada que cambió todo...",
-      footer:  "Desde ese instante, no dejamos de hablar"
+      content: `<div class="ig-chat">
+        <div class="ig-chat-header">
+          <div class="ig-avatar">A</div>
+          <span class="ig-username">_.antxx._</span>
+        </div>
+        <div class="ig-chat-body">
+          <div class="ig-date">12 ABR 2022</div>
+          <div class="ig-msg ig-sent">Ola</div>
+          <div class="ig-msg ig-sent">Cómo tas</div>
+          <div class="ig-msg ig-sent">Oye disculpa q te moleste</div>
+          <div class="ig-msg ig-sent">Pero me podrías pasar algunos apuntes de química</div>
+          <div class="ig-msg ig-sent">Esq siento q me faltan</div>
+          <div class="ig-msg ig-sent">Y estoy súper perdido</div>
+          <div class="ig-msg ig-sent">Dkdmdndk</div>
+          <div class="ig-msg ig-recv">Holi bn y tup?</div>
+          <div class="ig-reply-wrap">
+            <div class="ig-reply-ref">Pero me podrías pasar algunos apuntes de química</div>
+            <div class="ig-msg ig-recv">Yap te mando lo q tengo del repaso y algunos apuntes</div>
+          </div>
+        </div>
+      </div>`,
+      footer:  "Así empezó todo... pidiendo apuntes de química 😅"
     },
     {
       title:   "✦ La primera cita",
-      content: "Cuenta los detalles de su primera cita...<br>¿Dónde fueron? ¿Qué hicieron?",
+      content: "fue un 30 de junio nuestra primera cita oficial , recuerdo que me prepare mucho escogiendo el ofuit jsjsjjsjsj , fuimos al parque y nos sentamos en ese arbol kdkfkdfk y hablamos de todo un poco y nos besamos ",
+      videos:  ["assets/Fotitos/video2.mov"],   
       footer:  "Nervios, risas y mariposas"
     },
     {

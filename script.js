@@ -86,6 +86,16 @@ function initContent() {
       </div>`;
     }
 
+    let videosHtml = '';
+    if (ev.videos && ev.videos.length) {
+      videosHtml = `<div class="tl-videos">
+        ${ev.videos.map(src => `
+          <video class="tl-video" controls playsinline preload="metadata">
+            <source src="${src}">
+          </video>`).join('')}
+      </div>`;
+    }
+
     const item = document.createElement('div');
     item.className = 'tl-item';
     item.innerHTML = `
@@ -102,6 +112,7 @@ function initContent() {
           <div class="tl-content">
             ${ev.content}
             ${imgsHtml}
+            ${videosHtml}
           </div>
         </div>
         ${ev.footer ? `<div class="tl-footer">${ev.footer}</div>` : ''}
@@ -368,11 +379,11 @@ const fakePlaylist = [
   { title: "Tus ojos",         artist: "Los Cafres",              time: "4:15", cover: "assets/fotoCanciones/tusojos.webp",        src: "" },
   { title: "Signos",           artist: "Soda Stereo",             time: "5:17", cover: "assets/fotoCanciones/signos.webp",         src: "" },
   { title: "Beautiful",        artist: "Gustavo Cerati",          time: "6:14", cover: "assets/fotoCanciones/Beautiful.jpg",       src: "assets/GustavoCerati-Song1.mp3" },
-  { title: "Fashion Killa",    artist: "A$AP Rocky",              time: "4:46", cover: "assets/fotoCanciones/fashionkilla.jfif",   src: "" },
+  { title: "Fashion Killa",    artist: "A$AP Rocky",              time: "4:46", cover: "assets/fotoCanciones/FashionKilla.jpg",   src: "" },
   { title: "Thinkin Bout You", artist: "Frank Ocean",             time: "3:21", cover: "assets/fotoCanciones/thinkinboutyou.png", src: "" },
   { title: "prove it",         artist: "21 Savage & Summer Walker", time: "3:28", cover: "assets/fotoCanciones/proveit.jpg",      src: "" },
   { title: "Fui a Jamaica",    artist: "Romeo Santos",            time: "3:56", cover: "assets/fotoCanciones/fuiajamaica.webp",   src: "" },
-  { title: "Fashion Killa",    artist: "A$AP Rocky",              time: "4:46", cover: "assets/fotoCanciones/fashionkilla.jfif",  src: "" }
+  { title: "Fashion Killa",    artist: "A$AP Rocky",              time: "4:46", cover: "assets/fotoCanciones/FashionKilla.jpg",  src: "" }
 ];
 
 const plCarousel = document.getElementById("pl-carousel");
