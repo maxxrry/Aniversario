@@ -89,7 +89,8 @@ function initContent() {
     let videosHtml = '';
     if (ev.videos && ev.videos.length) {
       videosHtml = `<div class="tl-videos">
-        ${ev.videos.map(src => `
+        ${ev.videos.map(src => src.includes('drive.google.com') ? `
+          <iframe class="tl-video tl-video-drive" src="${src}" allow="autoplay" allowfullscreen frameborder="0"></iframe>` : `
           <video class="tl-video" controls playsinline preload="metadata">
             <source src="${src}">
           </video>`).join('')}

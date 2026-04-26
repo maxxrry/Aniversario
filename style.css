@@ -215,6 +215,7 @@ section{position:relative;z-index:1;width:100%;min-height:100vh;display:flex;fle
 .tl-footer{font-family:var(--hand);font-size:1.05rem;color:var(--gold);margin-top:.8rem;opacity:.85}
 .tl-videos{display:flex;flex-direction:column;gap:.75rem;margin-top:1rem}
 .tl-video{width:100%;border-radius:10px;object-fit:cover;box-shadow:0 4px 16px rgba(0,0,0,0.5);max-height:360px;background:#000}
+.tl-video-drive{aspect-ratio:16/9;max-height:none;border:none}
 
 /* ── GALLERY ── */
 #gallery{padding:6rem 2rem}

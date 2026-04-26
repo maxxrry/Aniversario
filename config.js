@@ -1,5 +1,6 @@
-const config = {
 
+const config = {
+  
   // ── TÍTULO DE LA PESTAÑA ──────────────────────────────────
   pageTitle: "Nuestro Aniversario ✦",
 
@@ -67,7 +68,7 @@ const config = {
     {
       title:   "✦ La primera cita",
       content: "fue un 30 de junio nuestra primera cita oficial , recuerdo que me prepare mucho escogiendo el ofuit jsjsjjsjsj , fuimos al parque y nos sentamos en ese arbol kdkfkdfk y hablamos de todo un poco y nos besamos ",
-      videos:  ["assets/Fotitos/video2.mov"],   
+      videos:  ["https://drive.google.com/file/d/1Vma5GxK5kHE0iBxUIZjTCAh-lVGlCaU7/preview"],
       footer:  "Nervios, risas y mariposas"
     },
     {
@@ -88,19 +89,17 @@ const config = {
   galleryTitle: "Nuestros momentos",
   // Agrega tus fotos aquí.  Si la ruta no existe se muestra un ícono.
   gallery: [
-    "assets/Fotitos/foto1.jpg",
-    "assets/Fotitos/foto2.jpg",
-    "assets/Fotitos/fotito3.jpg",
-    "assets/Fotitos/foto4.jpg",
-    "assets/Fotitos/foto5.jpg",
-    "assets/Fotitos/foto6.jpg",
-    "assets/Fotitos/foto7.jpg",
-    "assets/Fotitos/foto7(1).jpg",
-    "assets/Fotitos/foto8.jpg",
-    "assets/placeholder.svg"
-    // "assets/foto1.jpg",
-    // "assets/foto2.jpg",
-    // etc...
+    "https://drive.google.com/thumbnail?id=13Ksj0fUxuKQkulITUJMk9eZvbpWSKpLM&sz=w1600", // foto1
+    "https://drive.google.com/thumbnail?id=1iMea7W2GymyL05Eb95-hrXLErKzpDsPU&sz=w1600", // foto2
+    "https://drive.google.com/thumbnail?id=1AHBrhidkx6HFHwRnpBqng8kgXDlgtU4q&sz=w1600", // fotito3
+    "https://drive.google.com/thumbnail?id=1K4FIbyuQ2wGQFOT7rZ3WgPzWw4wQgZUN&sz=w1600", // foto4
+    "https://drive.google.com/thumbnail?id=1fynE3CiNFyIT0_Vnq2q5UMOlBTP5UEHP&sz=w1600", // foto5
+    "https://drive.google.com/thumbnail?id=1GoA5SXgCtnhv_3hAdsA6BzvY6xuACjq6&sz=w1600", // foto6
+    "https://drive.google.com/thumbnail?id=1GSn1px36SYG64of3bi45pimT-6IzJizo&sz=w1600",  // foto7
+    "https://drive.google.com/thumbnail?id=1Ikn74vR9I3TK6OPrSMC7P2n6TxoiZi6c&sz=w1600", // foto7(1)
+    "https://drive.google.com/thumbnail?id=16-jPUw7goB0-pEiM5WCIzPfuPzN_aBZU&sz=w1600", // foto8
+    "https://drive.google.com/thumbnail?id=1tRfHfLbUx7hXYqszElmaWNq0UwK3GNZH&sz=w1600", // IMG_1907
+    // Para agregar más fotos: "https://drive.google.com/thumbnail?id=FILE_ID&sz=w1600",
   ],
 
   // ── MENSAJE FINAL ─────────────────────────────────────────
